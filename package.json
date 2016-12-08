@@ -1,0 +1,19 @@
+{
+  "name": "axiata-assign",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soulski/axiata-assign.git"
+  },
+  "author": "soulski@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/soulski/axiata-assign/issues"
+  },
+  "homepage": "https://github.com/soulski/axiata-assign#readme"
+}
