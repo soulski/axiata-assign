@@ -1,22 +1,33 @@
-const Koa = require('koa'),
-      Router = require('koa-router');
-
 const pkg = require('package.json'),
       helmet = require('koa-helmet'),
-      error = require('./middleware/error.js');
+      body = require('koa-body'),
+      convert = require('koa-convert'),
+      error = require('./middleware/error.js'),
+      handler = require('handler');
 
-const app = new Koa(),
-      router = new Router();
+const Koa = require('koa'),
+      Router = require('koa-router'),
+      MessageRepository = require('repository/message.js');
+
+module.exports = (config, startup) => {
+    const app = new Koa(),
+          router = new Router(),
+          formBody = convert(body());
+
+    const messageRepository = new MessageRepository(startup.database);
+
+    const messageHandler = handler.message({ messageRepository });
+
+    router.get('/version', ctx => ctx.body = { version: pkg.version });
+    router.post('/message', formBody, messageHandler.create);
+    router.get('/message', formBody, messageHandler.list);
 
 
-router.get('/version', ctx => ctx.body = { version: pkg.version });
-
-
-app
-    .use(error())
-    .use(helmet())
-    .use(router.routes())
-    .use(router.allowedMethods());
+    app
+        .use(error())
+        .use(helmet())
+        .use(router.routes())
+        .use(router.allowedMethods());
     
-
-module.exports = app;
+    return app;
+};
