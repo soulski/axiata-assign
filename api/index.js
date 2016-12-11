@@ -21,7 +21,7 @@ const mergeResult = (result) => {
 const startServer = (config, result) => {
     const instance = server(config, result);
 
-    instance.listen(process.env.PORT || 9000, function() { 
+    instance.listen(process.env.PORT || config.port || 9000, function() { 
         const now = moment().format(), port = this.address().port;
         console.log(`[${now}] Server have been start on port ${port}`);
     });
