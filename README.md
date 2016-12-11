@@ -1,1 +1,1 @@
-# axiata-assign
+# Axiata-assign## Required software- docker- docker-compose- nodejs version 5-7- make## How to run- At root folder run ```make```- Run ```docker-compose up -d```
