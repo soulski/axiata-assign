@@ -3,6 +3,6 @@ module.exports = (msg) => {
         id: msg.id,
         sender: msg.sender,
         content: msg.content,
-        createDate: msg.createDate.getTime(),
+        createDate: msg.createDate.toISOString(),
     };
 };

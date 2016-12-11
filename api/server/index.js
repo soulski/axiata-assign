@@ -1,6 +1,7 @@
 const pkg = require('package.json'),
       helmet = require('koa-helmet'),
       body = require('koa-body'),
+      cors = require('koa-cors');
       convert = require('koa-convert'),
       error = require('./middleware/error.js'),
       handler = require('handler');
@@ -24,6 +25,7 @@ module.exports = (config, startup) => {
 
 
     app
+        .use(convert(cors({ origin: '*' })))
         .use(error())
         .use(helmet())
         .use(router.routes())

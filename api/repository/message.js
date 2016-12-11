@@ -41,13 +41,13 @@ class MessageRepository {
         if (startDate || endDate) {
             query.createDate = Object.assign(
                 query.createDate || {}, 
-                startDate ? { $gte: startDate } : {},
-                endDate ? { $lt: endDate } : {}
+                startDate ? { $gt: startDate } : {},
+                endDate ? { $lte: endDate } : {}
             ); 
         }
 
         return this.collection.find(query)
-            .sort([['createDate', -1]])
+            .sort([['createDate', 1]])
             .limit(100)
             .toArray()
             .then(collections => collections.map(deserialize))

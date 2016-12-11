@@ -1,6 +1,8 @@
+const moment = require('moment');
+
 class Message {
 
-    constructor(sender, content, createDate = new Date()) {
+    constructor(sender, content, createDate = moment().toDate()) {
         this.props = { 
             sender,
             content,

@@ -1,6 +1,16 @@
 version: '2'
 
 services:
+    web:
+        build: ./web
+        ports:
+            - "8080:80"
+    api:
+        build: ./api
+        ports:
+            - "9000:9000"
+        links:
+            - db
     db:
         image: mongo
         ports:
