@@ -16,7 +16,6 @@ module.exports = (config, startup) => {
           formBody = convert(body());
 
     const messageRepository = new MessageRepository(startup.database);
-
     const messageHandler = handler.message({ messageRepository });
 
     router.get('/version', ctx => ctx.body = { version: pkg.version });
