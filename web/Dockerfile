@@ -1,3 +1,3 @@
 FROM nginx:alpine
 
-ADD ./dist /usr/share/nginx/html
+ADD dist /usr/share/nginx/html
