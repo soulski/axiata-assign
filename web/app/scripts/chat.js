@@ -27,12 +27,12 @@ $(document).ready(() => {
 
   const source   = $('#message-template').html();
   const messageTmpl = Handlebars.compile(source);
-  const now = new Date().getTime();
+  const now = new Date();
 
   const convertMessage = messages => messages.map((msg) => {
     const createTime = moment(msg.createDate, moment.ISO_8601).valueOf();
 
-    msg.elapse = elapseTime(now, createTime);
+    msg.elapse = elapseTime(now.getTime(), createTime);
     msg.isOwner = msg.sender === name;
 
     return msg;
@@ -58,17 +58,15 @@ $(document).ready(() => {
     setTimeout(() => {
       loadMessage(startDate)
         .then((newMessages) => {
-          if (_.isEmpty(newMessages)) {
-            return pullNewMessage(startDate);
-          }
-
           $('#message-body')
             .append(messageTmpl(newMessages))
             .animate({ scrollTop: $('#message-body')[0].scrollHeight}, 1000);
 
-          const lastMessage = newMessages[newMessages.length - 1];
-          pullNewMessage(lastMessage.createDate);
-        });
+          return !_.isEmpty(newMessages)
+            ? newMessages[newMessages.length - 1].createDate
+            : startDate;
+        })
+        .then(pullNewMessage);
     }, 1000);
   }
 
@@ -78,8 +76,10 @@ $(document).ready(() => {
         .html(messageTmpl(messages))
         .animate({ scrollTop: $('#message-body')[0].scrollHeight}, 1000);
 
-      const lastMessage = messages[messages.length - 1];
-      pullNewMessage(lastMessage.createDate);
-    });
+      return !_.isEmpty(messages) 
+        ? messages[messages.length - 1].createDate
+        : now.toISOString();
+    })
+    .then(pullNewMessage);
 
 });
